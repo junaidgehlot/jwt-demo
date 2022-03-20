@@ -3,6 +3,7 @@ require('express-async-errors');
 
 const express = require('express');
 const app = express();
+const appRoutes = require('./routes/main');
 
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
@@ -11,10 +12,14 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 app.use(express.static('./public'));
 app.use(express.json());
 
-app.use(notFoundMiddleware);
-app.use(errorHandlerMiddleware);
+app.use('/api/v1', appRoutes);
 
-const port = process.env.PORT || 3000;
+
+app.use(notFoundMiddleware);
+// app.use(errorHandlerMiddleware);
+
+
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {
